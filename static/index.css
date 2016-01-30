@@ -1,0 +1,103 @@
+/*------------/ BODY /-------------*/
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+
+
+/*------------/ WEB NAVBAR /-------------*/
+#logo {
+  height: 100%;
+}
+
+.navbar {
+  border-radius: 0;
+  box-shadow: rgba(0,0,0,0.3) 0 1px 4px 0;
+  margin-bottom: 0;
+  z-index: 3;
+}
+
+.navbar-brand {
+  padding: 10px 10px;
+}
+
+.navbar-default {
+  background-color: #fff;
+  border-style: solid;
+  border-width: 5px 0 0 0;
+  border-color: #ffcb00;
+}
+
+.navbar-default .navbar-text,
+.navbar-default .navbar-nav > li > a {
+  color: #0065b8;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #41a9ff;
+  background-color: #e1eefa;
+}
+
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  color: #41a9ff;
+  background-color: #e1eefa;
+}
+
+
+
+/*------------/ MOBILE NAV /-------------*/
+.navbar-default .navbar-toggle {
+  border-color: #00355f;
+  border-width: 2px;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #e1eefa;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #00355f;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #e1eefa;
+}
+
+
+
+/*------------/ DROPOWN /-------------*/
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #00355f;
+}
+
+
+
+/*------------/ SEARCH BOX /-------------*/
+.search-container {
+  width: 300px;
+  height: 200px;
+  /*margin: 100px 100px;*/
+  border-radius: 2px;
+  position: absolute;
+  z-index: 3;
+}
+
+@media (max-width: 767px) {
+}
+
+
+
+/*------------/ MAP /-------------*/
+#map {
+  height: 100%;
+}
+
+

@@ -1,46 +1,117 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-    <title>Expedia Hackathon</title>
-    <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="index.css">
-
-    <!-- GOOGLE MAPS API -->
-    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
-
-        
-    <script>
-      function initMap() {
-        var mapDiv = document.getElementById('map');
-        var map = new google.maps.Map(mapDiv, {
-          center: {lat: 44.540, lng: -78.546},
-          zoom: 8
-        });
-      }
-    </script>
-    
+  <title>Expedia Hackathon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
-    <h1>Map</h1>
-    <form action="" method="POST">
-        <label for="origin">Origin:</label>
-        <input type="text" name="origin">
 
-        <label for="total_price">Price:</label>
-        <input type="text" name="total_price">
+  <!-- CONTENTS BEGIN-->
 
-        <label for="start_date">From:</label>
-        <input type="date" name="start_date">
+    <!-- SEARCH BUTTON -->
+      <!--
+      <h1>Map</h1>
+      <form action="" method="POST">
+          <label for="origin">Origin:</label>
+          <input type="text" name="origin">
 
-        <label for="end_datae">To:</label>
-        <input type="date" name="end_date">
+          <label for="total_price">Price:</label>
+          <input type="text" name="total_price">
 
-        <input type="submit" value="Search">
-    </form>
+          <label for="start_date">From:</label>
+          <input type="date" name="start_date">
 
-    <div id="map">
+          <label for="end_datae">To:</label>
+          <input type="date" name="end_date">
 
+          <input type="submit" value="Search">
+      </form>
+
+      <div id="map">
+      </div>
+    -->
+
+    <!-- NAVBAR -->
+    <div class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="/" class="navbar-brand"><img src="logo_expedia.svg" alt="" id="logo"></a>
+          <!-- MOBILE MENU -->
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          <!-- MOBILE MENU /-->
+        </div>
+
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav navbar-right">
+
+            <!-- MENU 1 -->
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="account">Account <span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="themes">
+                <li><a href="#">Starred</a></li>
+                <li><a href="#">Profile</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Signout</a></li>
+              </ul>
+            </li>
+
+            <!-- MENU 2 -->
+            <li>
+              <a href="#">Help</a>
+            </li>
+
+            <!-- MENU 3 -->
+            <li>
+              <a href="#">Blog</a>
+            </li>
+
+            <!-- MENU 4 -->
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="support">Support <span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="download">
+                <li><a href="#">Contact Team</a></li>
+                <li><a href="#">Feedback</a></li>
+              </ul>
+            </li>
+
+          </ul>
+        </div>
+      </div>
     </div>
+
+
+    <!-- MAP BOX -->
+    <div class="thumbnail">
+      <p><a class="btn btn-default" href="#" role="button">Book Now &raquo;</a></p>
+    </div>
+    <div id="map"></div>
+    <!-- </div> -->
+  <!-- CONTENTS END /-->
+
+
+  <!-- GOOGLE MAPS API -->
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCausKJ7flSP5a28LEc1Jmk8v2z5zkUyyg&callback=initMap">
+  </script>
+  <!-- JQUERY -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <!-- JS -->
+  <script type="text/javascript" src="bootstrap.js"></script>
+  <script>
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 39.50, lng: -98.35},
+        zoom: 5
+      });
+    }
+    window.onload = initMap();
+  </script>
 </body>
 </html>
