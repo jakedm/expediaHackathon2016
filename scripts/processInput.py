@@ -3,14 +3,25 @@ import beautifulsoup4
 from getAirports import getAirports
 
 def getHotels(dep, all_destinations, daterange):
-    result = Requests.get("http://terminal2.expedia.com:80/x/mflights/search", params=payload)
-
-
-def getFlights(dep, dest, daterange):
     '''
     This function will return the cheapest flight for a given location that leaves, returns on
     the given daterange.
     
+    '''
+    result = Requests.get("http://terminal2.expedia.com:80/x/mflights/search", params=payload)
+
+
+def getFlights(dep, all_destinations, daterange):
+    '''
+    This function will return the cheapest flight for a given location that leaves, returns on
+    the given daterange.
+
+    :param dep: String denoting departure airport
+    :param all_destinations: List of all possible destinations (Strings)
+    :param daterange: List of date range (two strings)
+
+    returns (in some data structure) the name of the flight to the destination, the name of the flight home, and the
+      round trip price for the flights selected.
     '''
 
 
@@ -72,5 +83,8 @@ def processInput(daterange, price, dep):
     possible_dest = findAllDest(dep, daterange, price)
 
     # findVacations will return a dictionary(?) of structure:
-    #   vacations['destination airport'] = {'price of cheapest destination flight' : 'price', 'flight name' : 'name', 'price of cheapest return flight' : 'price', 'flight name' : 'name', 'price of cheapest hotel for entirety of stay' : 'price', 'name of hotel' : 'name', 
-    vacations = findVacations(
+    #   vacations['destination airport'] = {'price of cheapest destination flight' : 'price', 'flight name' : 'name', 'price of cheapest return flight' : 'price', 'flight name' : 'name', 'price of cheapest hotel for entirety of stay' : 'price', 'name of hotel' : 'name']
+    #   
+    #   In other words, the dictionary will contain:
+    #   Price of cheapest flight to destination, name of flight, price of cheapest flight home, name of flight,
+    vacations = findVacations()
