@@ -1,0 +1,8 @@
+* {
+	outline: 1px dotted red;
+}
+
+#map{
+    width: 500px;
+    height: 400px;
+}
