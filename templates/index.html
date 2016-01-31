@@ -11,34 +11,11 @@
 
   <!-- CONTENTS BEGIN-->
 
-    <!-- SEARCH BUTTON -->
-      <!--
-      <h1>Map</h1>
-      <form action="" method="POST">
-          <label for="origin">Origin:</label>
-          <input type="text" name="origin">
-
-          <label for="total_price">Price:</label>
-          <input type="text" name="total_price">
-
-          <label for="start_date">From:</label>
-          <input type="date" name="start_date">
-
-          <label for="end_datae">To:</label>
-          <input type="date" name="end_date">
-
-          <input type="submit" value="Search">
-      </form>
-
-      <div id="map">
-      </div>
-    -->
-
     <!-- NAVBAR -->
     <div class="navbar navbar-default">
       <div class="container">
         <div class="navbar-header">
-          <a href="/" class="navbar-brand"><img src="logo_expedia.svg" alt="" id="logo"></a>
+          <a href="/" class="navbar-brand"><img src="../static/images/logo_expedia.svg" alt="" id="logo"></a>
           <!-- MOBILE MENU -->
             <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
               <span class="icon-bar"></span>
@@ -88,136 +65,132 @@
 
 
     <!-- MAP BOX -->
-    <div class="thumbnail">
-      <p><a class="btn btn-default" href="#" role="button">Book Now &raquo;</a></p>
-      <button id="search">Search</button>
-      <form action="/user_input" method="post">
-        <label for="origin">Origin:</label>
-        <div id="dropdown"></div>
+    <div class="row">
+      <div class="col-md-5 col-sm-7 search-container">
+        <div class="thumbnail search-box">
+          <form action="/user_input" method="post">
+            <legend>Start from here</legend>
 
-        <label for="total_price">Price:</label>
-        <input type="range" min="0" max="1000" value="0" name="price" onchange="showValue(this.value)" name="total_price" />
-        <span id="range">$0</span>
+            <div class="form-group">
+              <select class="form-control" id="dropdown"></select>
+            </div>
 
-        <label for="start_date">From:</label>
-        <input type="date" name="start_date">
+inline
+            <div class="form-group">
+              <input class="form-control" type="date" name="start_date" />
+            </div>
 
-        <label for="end_date">To:</label>
-        <input type="date" name="end_date">
+            <div class="form-group">
+              <i class="fa fa-lg fa-arrow-down" style="margin-left: 10px"></i>
+            </div>
 
-        <input type="radio" name="option" value="plane" checked>Airplane Only
-        <input type="radio" name="option" value="plane_hotel">Airplane and Hotel
-        <input type="submit" value="Search">
-      </form> 
+            <div class="form-group">
+              <input class="form-control" type="date" name="end_date" />
+            </div>
+
+            <div class="form-group">
+              <input type="range" min="0" max="1000" value="0" name="price" onchange="showValue(this.value)" name="total_price" />
+              <i class="fa fa-usd"></i> <span id="range">0</span>
+            </div>
+
+            <div class="form-group">
+            <label>
+              <input type="checkbox" name="option" value="plane" checked />
+                I'd rather go with Nonstop <i class="fa fa-paper-plane-o"></i>
+              </label>
+            </div>
+
+            <input type="submit" value="Search &raquo;" class="btn btn-default btn-block" type="submit" id="search">
+          </form>
+        </div>
+      </div>
     </div>
-    <div id="user_input">
-      <i class="material-icons">flight</i>
-      <span>SEA --> SLC $300</span>
-      <hr>
-      <img src="../static/pictures/hotel.jpg" alt="hotel" height="100" width="100%">
-      <hr>
-      <i class="material-icons">home</i>
-      <span> 3 days x $66 -> $198</span>
-      <span> Total = $498</span>
-      <button>Book</button>
-    </div>
-    <div id="map">
-      
-    </div>
-    <!-- </div> -->
+
+
+    <div id="map"><div id="user_input"></div></div>
+
   <!-- CONTENTS END /-->
 
 
-  <!-- GOOGLE MAPS API -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCausKJ7flSP5a28LEc1Jmk8v2z5zkUyyg&callback=initMap">
-  </script>
+
   <!-- JQUERY -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
   <!-- JS -->
   <script type="text/javascript" src="../static/js/bootstrap.js"></script>
   <script type="text/javascript" src="../static/js/airports.js"></script>
+
+  <!-- ICONS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  <!-- GOOGLE MAPS API -->
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCausKJ7flSP5a28LEc1Jmk8v2z5zkUyyg&callback=initMap">
+  </script>
   <script>
-
-    var map;
-
     function initMap() {
-      // Map on landing page
-      var mapDiv = document.getElementById('map');
-      map = new google.maps.Map(mapDiv, {
-        center: {lat: 39.6097, lng: -98.19661},
-        zoom: 5
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 39.50, lng: -98.35},
+        zoom: 5,
+        mapTypeControl: false
       });
     }
-
-    function showValue(val){
-        document.getElementById("range").innerHTML="$"+val;
-    }
-    // function initMap() {
-    //   var map = new google.maps.Map(document.getElementById('map'), {
-    //     center: {lat: 39.50, lng: -98.35},
-    //     zoom: 5
-    //   });
-    // }
     window.onload = initMap();
+  </script>
 
+  <!-- SEARCH AREA -->
+  <script type="text/javascript">
+
+    // SLIDE BAR
+    function showValue(val){
+      document.getElementById("range").innerHTML=val;
+    }
     $(document).ready(function(){
+      // AIRPORT LIST
+      var dropdown = "<select name='airports'><br>";
+      for(airport in airports){
+        dropdown += "<option value="+airports[airport].code+">"+airport+"</option><br>";
+      }
+      dropdown += "</select>";
+      $('#dropdown').html(dropdown);
+      $('#search').click(function(){
 
-        var dropdown = "<select name='airports'><br>";
-        for(airport in airports){
-          dropdown += "<option value="+airports[airport].code+">"+airport+"</option><br>";
-        }
-        dropdown += "</select>";
-        $('#dropdown').html(dropdown);
+        // GET request to API
+        $.get('/search', function(res) {
+          console.log(res);
 
-        $('#search').click(function(){
-
-          // GET request to API
-          $.get('/search', function(res) {
-            console.log(res);
-
-            // MAP Specs
-            var mapProp = {
+          // MAP Specs
+          var mapProp = {
             center:new google.maps.LatLng(47.609786,-122.1966154),
             zoom:8,
             mapTypeId:google.maps.MapTypeId.ROADMAP
-            };
+          };
 
-            // Creating instance of map with specs above
-            // var map = new google.maps.Map(document.getElementById("map"), mapProp);
+          // Instance of infowindow
+          var infowindow = new google.maps.InfoWindow();
+          var marker, j;
 
-            // Instance of infowindow
-            var infowindow = new google.maps.InfoWindow();
-            var infowindow1 = new google.maps.InfoWindow();
-            var marker, j;
+          // Traversing through all locations that meet specifications by user (All Airports)
+          for (var j =0; j < res.CarInfoList.CarInfo.length; j++) {
+            console.log(res.CarInfoList.CarInfo[j].DropOffInfo.Location.GeoLocation.Latitude, res.CarInfoList.CarInfo[j].DropOffInfo.Location.GeoLocation.Longitude)
 
-            // Traversing through all locations that meet specifications by user (All Airports)
-            for(var j =0; j < res.CarInfoList.CarInfo.length; j++){
-              console.log(res.CarInfoList.CarInfo[j].DropOffInfo.Location.GeoLocation.Latitude, res.CarInfoList.CarInfo[j].DropOffInfo.Location.GeoLocation.Longitude)
+            // Creating Markers for each location (Airports)
+            marker = new google.maps.Marker({
+              position: new google.maps.LatLng(res.CarInfoList.CarInfo[j].DropOffInfo.Location.GeoLocation.Latitude, res.CarInfoList.CarInfo[j].DropOffInfo.Location.GeoLocation.Longitude),
+              map: map
+            });
 
-              // Creating Markers for each location (Airports)
-              marker = new google.maps.Marker({
-                position: new google.maps.LatLng(res.CarInfoList.CarInfo[j].DropOffInfo.Location.GeoLocation.Latitude, res.CarInfoList.CarInfo[j].DropOffInfo.Location.GeoLocation.Longitude),
-                map: map
-              });
-
-              // Adding content to infowindows (Hotel+Airfare total)
-              google.maps.event.addListener(marker, 'click', (function(marker, j) {
-                return function() {
-                  // infowindow.setContent("<p>"+locations[j]['firstName']+"\'s Location</p>"+"<a href='/student/request/"+locations[j]['user_id']+"'>Request Tutor</a>");
-                  infowindow.setContent("<i class='material-icons'>flight</i><span>SEA --> SLC $300</span><hr><img src="+res.CarInfoList.CarInfo[j].ThumbnailUrl+"alt='hotel' height='100' width='100%'"+"<p>$"+res.CarInfoList.CarInfo[j].Price.BaseRate.Value+"</p>");
-                  infowindow.open(map, marker);
-                }
-              })(marker, j));
-              infowindow1.setContent("<p>$"+res.CarInfoList.CarInfo[j].Price.BaseRate.Value+"</p>");
-              infowindow1.open(map, marker);
-            }
-          })
+            // Adding content to infowindows (Hotel+Airfare total)
+            google.maps.event.addListener(marker, 'click', (function(marker, j) {
+              return function() {
+                infowindow.setContent("<p>$"+res.CarInfoList.CarInfo[j].Price.BaseRate.Value+"</p>");
+                infowindow.open(map, marker);
+              }
+            })(marker, j));
+          }
         })
+      })
     })
-
   </script>
 </body>
 </html>
