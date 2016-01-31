@@ -3,7 +3,6 @@ import requests
 import json
 #import hotels
 
-flightOverViewUrl = 'http://terminal2.expedia.com:80/x/flights/overview/get'
 '''
     This function will return the cheapest flight for a given location that leaves, returns on
     the given daterange.
@@ -16,6 +15,7 @@ flightOverViewUrl = 'http://terminal2.expedia.com:80/x/flights/overview/get'
       round trip price for the flights selected.
 '''
 
+flightOverViewUrl = 'http://terminal2.expedia.com:80/x/flights/overview/get'
 def getFlights(depCode, all_destinations, maxDays):
     flightsDict = {}
     for des in all_destinations:
@@ -59,7 +59,7 @@ def flightsQuery(depCode, des, maxDays):
     },
     "FareCalendar": {
     "StartDate": "2016-02-05T19:33:39.363-08:00",
-    "dayCount": str(maxDays)
+    "DayCount": str(maxDays)
     }
     }
 
@@ -78,11 +78,11 @@ def flightsQuery(depCode, des, maxDays):
         allFlightsRetDates.append(jsonReturn["FareCalendar"]["AirOfferSummary"][i]["FlightItinerarySummary"]["InboundDepartureTime"])
 
     resultMin = min(allFlights)
-    indexOfMin = allFlights.index(price)
+    indexOfMin = allFlights.index(resultMin)
 
     flightsInfo = {}
-    flightsInfo["depDate"] = allFlightsDepDates[index]
-    flightsInfo["retDate"] = allFlightsRetDates[index]
-    flightsInfo["price"] = allFlights[index]
+    flightsInfo["depDate"] = allFlightsDepDates[indexOfMin]
+    flightsInfo["retDate"] = allFlightsRetDates[indexOfMin]
+    flightsInfo["price"] = allFlights[indexOfMin]
 
     return flightsInfo 
