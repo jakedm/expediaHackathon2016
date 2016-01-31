@@ -21,7 +21,6 @@ def getFlights(depCode, all_destinations, maxDays):
     for des in all_destinations:
         flightsDict[des] = flightsQuery(depCode, des, maxDays)
 
-    print(flightsDict)
     #hotelsQuery(allFlights)
 
 def flightsQuery(depCode, des, maxDays):
@@ -87,8 +86,3 @@ def flightsQuery(depCode, des, maxDays):
     flightsInfo["price"] = allFlights[indexOfMin]
 
     return flightsInfo 
-
-
-all_destinations = ["SFO", "LAX", "JFK"]
-
-getFlights("SEA", all_destinations, 10)
