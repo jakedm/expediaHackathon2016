@@ -82,15 +82,34 @@ body {
 
 /*------------/ SEARCH BOX /-------------*/
 .search-container {
-  width: 300px;
-  height: 200px;
-  /*margin: 100px 100px;*/
-  border-radius: 2px;
   position: absolute;
   z-index: 3;
 }
 
+.search-box {
+  margin: 5% 15%;
+  padding: 10px;
+
+  display: block;
+  line-height: 1.42857143;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+
+  -webkit-transition: border 0.2s ease-in-out;
+  -o-transition: border 0.2s ease-in-out;
+  transition: border 0.2s ease-in-out;
+}
+
 @media (max-width: 767px) {
+  .search-container {
+    position: static;
+  }
+
+  .search-box {
+    margin: 0;
+    padding: 5px 15px;
+  }
 }
 
 
@@ -99,20 +118,3 @@ body {
 #map {
   height: 100%;
 }
-
-#user_input{
-  border: 2px solid black;
-  height: 300px;
-  width: 200px;
-  position: relative;
-/*<i class="material-icons">flight</i>
-      <span>SEA --> SLC $300</span>
-      <hr>
-      <img src="../static/pictures/hotel.jpg" alt="hotel" height="100" width="100%">
-      <hr>
-      <i class="material-icons">home</i>
-      <span> 3 days x $66 -> $198</span>
-      <span> Total = $498</span>
-      <button>Book</button>*/
-}
-
