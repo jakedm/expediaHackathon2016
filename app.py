@@ -14,6 +14,11 @@ def index():
 @app.route('/user_input', methods=['POST'])
 def user_input():
     print request.form
+    print request.form['airport']
+    print request.form['price']
+    print request.form['month']
+    print request.form['option']
+    print request.form['num_days']
     return redirect('/')
 
 @app.route('/search', methods=['GET'])
