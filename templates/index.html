@@ -68,7 +68,7 @@
     <div class="row">
       <div class="col-md-6 col-sm-7 search-container">
         <div class="thumbnail search-box">
-          <form action="/user_input" method="post">
+          <form action="" method="">
             <legend>Start from here</legend>
 
             <div class="form-group">
@@ -107,9 +107,10 @@
                 I'd rather go with Nonstop <i class="fa fa-paper-plane-o"></i>
               </label>
             </div>
-
-            <input type="submit" value="Search &raquo;" class="btn btn-default btn-block" type="submit" id="search">
+            
+            <input type="submit"  value="Search &raquo;" class="btn btn-default btn-block" type="submit">
           </form>
+          <button id="search">Search</button>
         </div>
       </div>
     </div>
@@ -136,18 +137,17 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCausKJ7flSP5a28LEc1Jmk8v2z5zkUyyg&callback=initMap">
   </script>
   <script>
+
+    var map;
     function initMap() {
-      var map = new google.maps.Map(document.getElementById('map'), {
+       map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 39.50, lng: -98.35},
         zoom: 5,
         mapTypeControl: false
       });
     }
     window.onload = initMap();
-  </script>
 
-  <!-- SEARCH AREA -->
-  <script type="text/javascript">
 
     // SLIDE BAR
     function showValue(val){
@@ -162,7 +162,7 @@
       dropdown += "</select>";
       $('#dropdown').html(dropdown);
       $('#search').click(function(){
-
+        console.log('HI')
         // GET request to API
         $.get('/search', function(res) {
           console.log(res);
@@ -176,6 +176,7 @@
 
           // Instance of infowindow
           var infowindow = new google.maps.InfoWindow();
+          var infowindow1 = new google.maps.InfoWindow();
           var marker, j;
 
           // Traversing through all locations that meet specifications by user (All Airports)
@@ -191,10 +192,12 @@
             // Adding content to infowindows (Hotel+Airfare total)
             google.maps.event.addListener(marker, 'click', (function(marker, j) {
               return function() {
-                infowindow.setContent("<p>$"+res.CarInfoList.CarInfo[j].Price.BaseRate.Value+"</p>");
+                infowindow.setContent("<i class='material-icons'>flight</i><p>"+res.CarInfoList.CarInfo[j].Price.BaseRate.Value+"</p>");
                 infowindow.open(map, marker);
               }
             })(marker, j));
+            infowindow1.setContent("<p>$"+res.CarInfoList.CarInfo[j].Price.BaseRate.Value+"</p>");
+            infowindow1.open(map, marker);
           }
         })
       })
