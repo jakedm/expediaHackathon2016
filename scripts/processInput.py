@@ -20,10 +20,10 @@ def startQuery(dep, all_destinations, num_days, month, user_price):
     day_list = []
     day_list.append(max_days)
     if (max_days > 2):
-        day_list.append(num_days - 1)
-        day_list.append(num_days - 2)
+        day_list.append(int(num_days) - 1)
+        day_list.append(int(num_days) - 2)
     elif (max_days == 2):
-        day_list.append(num_days - 1)
+        day_list.append(int(num_days) - 1)
 
     start_date = year + '-' + month + '-' + start_day
 
