@@ -1,6 +1,8 @@
 import json
 import requests
 
+
+maxDays = 10
 url = 'http://terminal2.expedia.com:80/x/flights/overview/get'
 data = {
 "MessageHeader" : {
@@ -31,11 +33,11 @@ data = {
 "AirportCode" : [ "SFO" ]
 },
 "FlightListings" : {
-"MaxCount" : 1
+"MaxCount" : 10
 },
 "FareCalendar": {
 "StartDate": "2016-02-05T19:33:39.363-08:00",
-"dayCount": "1"
+"dayCount": str(maxDays)
 }
 }
 
@@ -45,6 +47,7 @@ response = requests.post(url, data=data_json, headers=headers)
 
 fakeReturn = response.json()
 totalItems = len(fakeReturn["FareCalendar"]["AirOfferSummary"])
+print("totalItems is: " + str(totalItems))
 allFlights = []
 for i in range(0,totalItems):
     allFlights.append(fakeReturn["FareCalendar"]["AirOfferSummary"][i]["FlightPriceSummary"]["TotalPrice"])

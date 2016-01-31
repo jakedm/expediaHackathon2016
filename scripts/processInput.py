@@ -1,45 +1,14 @@
 import requests
 import json
 from getAirports import getAirports
+from flightsQuery import getFlights
 from datetime import datetime
-
+import random
+#from getAirbnb import *
 
 # Day to begin searching at
 start_day = '15'
 year = datetime.now().year
-
-"""
-#DEPRECATED
-def parseHotels(json_response):
-    '''
-    This function will parse the json response, and get the desired fields from the json text.
-
-    This will return a dictionary of the data for the selected hotel, of form:
-      display_info = {
-        'name' : hotel_name (string)
-        'address' : hotel_address (string)
-        'lat' : latitude (string)
-        'lng' : longitude (string)
-        'cost' : total cost (float)
-      }
-
-    '''
-    response = json.loads(str(json_response))
-    
-    
-    hotel = response['HotelInfoList'][0]
-    name = hotel['Name']
-    address = hotel['Location']['StreetAddress'] + ", " hotel['Location']['City'] + ", " + hotel['Location']['Province'] + " " + hotel['Location']['Country']
-    lat_lng = [hotel['Location']['GeoLocation']['Latitude'], hotel['Location']['GeoLocation']['Longitude']]
-    price_per_night = (double)hotel['Promotion']['Amount']['Value']
-    days = (int)hotel['LengthOfStay']
-    
-    total_cost = price_per_night * days
-
-    display_info = {'name' : name, 'address' : address, 'lat' : lat_lng[0], 'lng' : lat_lng[1], 'cost' : total_cost}
-
-    return display_info
-"""    
 
 def startQuery(dep, all_destinations, num_days, month, user_price):
     '''
@@ -51,53 +20,69 @@ def startQuery(dep, all_destinations, num_days, month, user_price):
     max_days = num_days
     day_list = []
     day_list.append(max_days)
+    """
     if (max_days > 2):
-        day_list.append(num_days - 1)
-        day_list.append(num_days - 2)
-    else:
-        day_list.append(num_days - 1)
-
-    start_date = year + '-' + month + '-' + start_day
+        day_list.append(int(num_days) - 1)
+        day_list.append(int(num_days) - 2)
+    elif (max_days == 2):
+        day_list.append(int(num_days) - 1)
+    """
+    start_date = str(year) + '-' + str(month) + '-' + str(start_day)
 
     hotels_list = []
     flights_list = []
-    for i in range(0, len(day_list)):
-        flights_list[i], hotels_list[i] = flightsQuery(dep,all_destinations,(int)day_list[i],start_date,(int)user_price)
-        
     
+    #This is the area where I call Jason's code. Method name will change, most likely
+    for i in range(0, len(day_list)):
+        temp1, temp2 = getFlights(dep, all_destinations, int(day_list[i]))
+        flights_list.append(temp1)
+        hotels_list.append(temp2)
+        #flights_list[i], hotels_list[i] = getFlights(dep, all_destinations, int(day_list[i]))
+
+    #flights_list[0], hotels_list[0] = 
+
     master_list = {}
     for dest in all_destinations:
         done = False
         days_index = 0
         while not done:
-            hotel = hotels_list[days_index][dest]
-            current_price = (int)flights_list[days_index]['price'] + (int)hotel['price']
-            if current_price <= (int)user_price:
-                done = True
-                
-                # I NEED JASON TO RETURN THE CITY, STATE, AND COUNTRY VALUES FROM THE HOTEL API
-                #MAKE MASTER DICTIONARY
-                lat = hotel['lat']
-                lng = hotel['lng']
-                address = hotel['address']
-                picture_url = hotel['url']
-                state = hotel['state']
-                city = hotel['city']
+            #hotel = hotels_list[days_index][dest]
+            #current_price = int(flights_list[days_index]['price']) + int(hotel['price'])
+            current_price = random.randrange(150, 300)
+            if current_price <= int(user_price):
+                done = True                
+
+                #lat = str(hotel['lat'])
+                #lng = str(hotel['lng'])
+                #address = str(hotel['address'])
+                #picture_url = str(hotel['url'])
+                #state = str(hotel['state'])
+                #city = str(hotel['city'])
+                lat = hotels_list[0]["lat"]
+                lng = hotels_list[0]["lng"]
+                address = hotels_list[0]["address"]
+                picture_url= hotels_list[0]["url"]
+                state= hotels_list[0]["state"]
+                city = hotels_list[0]["city"]
                 country = "United States"
-                start = flights_list[days_index]['depDate']
-                end = flights_list[days_index]['retDate']
-                #airbnb_price = getAirbnbEntries(city, state, country, start, end)
+                start = str(flights_list[days_index][dest]['depDate'])
+                end = str(flights_list[days_index][dest]['retDate'])
+                #airbnb_data = getAirbnbEntries(city, state, country, start, end)
+                #airbnb_cost = str(airbnb_data['airbnb_cost'])
+                airbnb_cost = random.randrange(50, 200)
+                airbnb_url = "www.airbnb.com"
+                #airbnb_url = str(airbnb_data['url'])
                 master_list[dest] = {
                     'departure' : dep, 
                     'destination' : dest, 
-                    'cost' = current_price, 
+                    'cost' : current_price, 
                     'lat' : lat,
                     'lng' : lng,
-                    'picture' : url,
+                    'picture' : picture_url,
                     'startDate' : start,
                     'endDate' : end,
-                    'airbnb_cost' : airbnb_price}
-                    
+                    'airbnb_cost' : airbnb_cost,
+                    'airbnb_url' : airbnb_url}
             else:
                 days_index += 1
             
@@ -109,11 +94,19 @@ def findAllDest(dep):
 
     '''
     locations = getAirports()
-    destinations = locations.pop(locations.index(dep))
+    orig = len(locations)
+    print (len(locations))
+    temp = locations.index(dep)
+    del(locations[temp])
+    #temp = locations.pop(locations.index(dep))
+    #destinations = locations.pop(locations.index(dep))
+    destinations = locations
 
-    if len(destinations) == len(locations):
+    if len(destinations) == orig:
         print("Error: departure location not in database.")
         exit(-1)
+        
+    print(len(destinations))
         
     return destinations
 
@@ -136,3 +129,7 @@ def processInput(month, num_days, price, dep):
     destinations= findAllDest(dep)
 
     data = startQuery(dep, destinations, num_days, month, price)
+
+    #processInput("02", "10", "800", "SEA")
+
+    return data

@@ -1,5 +1,11 @@
 import sys
 
+
+def getAirports():
+    return ["LAX", "SEA", "SFO", "JFK", "ABR", "ABI", "ORD", "DFW"]
+
+
+'''
 def getAirports():
     return ["ABR","ABI","CAK","ALS","ABY","ALB","ABQ","AEX","ABE",
                         "AIA","APN","AOO","AMA","ANC","ATW","AVL","ASE","AHN",
@@ -59,3 +65,4 @@ def getAirports():
                         "YZP","YZR","YXE","YAM","YZV","YXL","YYD","YYT","YSB",
                         "YQY","YXT","YTH","YQT","YTS","YYZ","YTO","YTZ","YVO",
                         "YVR","YYJ","YWK","YXY","YWL","YQG","YWG","YZF","LAX"]
+'''

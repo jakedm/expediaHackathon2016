@@ -1,41 +1,11 @@
-import sys
-import requests
 import json
-from hotels import getHotels
+import requests
 
-'''
-    This function will return the cheapest flight for a given location that leaves, returns on
-    the given daterange.
-
-    :param dep: String denoting departure airport
-    :param all_destinations: List of all possible destinations (Strings)
-    :param maxDays: integer value of desired travel duration 
-
-    returns (in some data structure) the name of the flight to the destination, the name of the flight home, and the
-      round trip price for the flights selected.
-'''
-
-flightOverViewUrl = 'http://terminal2.expedia.com:80/x/flights/overview/get'
-def getFlights(depCode, all_destinations, maxDays):
-    flightsDict = {}
-    for des in all_destinations:
-        flightsDict[des] = flightsQuery(depCode, des, maxDays)
-
-    #hotels_list = getHotels(flightsDict, maxDays)
-    
-    hotels_list = {
-        "lat" : "10",
-        "lng" : "20",
-        "address" : "gdsag",
-        "url" : "www.google.com",
-        "state" : "WA",
-        "city" : "SEA"
-        }
-        
-    return (flightsDict,hotels_list)
+depCode = "SEA"
+maxDays = 10
+all_destinations = ["SFO", "LAX", "JFK"]
 
 def flightsQuery(depCode, des, maxDays):
-
     url = 'http://terminal2.expedia.com:80/x/flights/overview/get'
     data = {
     "MessageHeader" : {
@@ -77,8 +47,8 @@ def flightsQuery(depCode, des, maxDays):
     data_json = json.dumps(data)
     headers = {'accept': 'application/json', 'Authorization': 'expedia-apikey key=BQBh6sGziLeQsNQxVjHPlaO08ATfLKn7'}
     response = requests.post(url, data=data_json, headers=headers)
+
     jsonReturn = response.json()
-    print(des)
     totalItems = len(jsonReturn["FareCalendar"]["AirOfferSummary"])
     allFlights = []
     allFlightsDepDates = []
@@ -96,4 +66,10 @@ def flightsQuery(depCode, des, maxDays):
     flightsInfo["retDate"] = allFlightsRetDates[indexOfMin]
     flightsInfo["price"] = allFlights[indexOfMin]
 
-    return flightsInfo 
+    return flightsInfo
+
+flightsDict = {}
+for des in all_destinations:
+    flightsDict[des] = flightsQuery(depCode, des, maxDays)
+
+print(flightsDict)
