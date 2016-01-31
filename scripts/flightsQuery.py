@@ -1,6 +1,7 @@
 import sys
 import requests
 import json
+#import hotels
 
 flightOverViewUrl = 'http://terminal2.expedia.com:80/x/flights/overview/get'
 '''
@@ -16,7 +17,15 @@ flightOverViewUrl = 'http://terminal2.expedia.com:80/x/flights/overview/get'
 '''
 
 def getFlights(depCode, all_destinations, maxDays):
+    flightsDict = {}
+    for des in all_destinations:
+        flightsDict[des] = flightsQuery(depCode, des, maxDays)
 
+    #hotelsQuery(allFlights)
+
+def flightsQuery(depCode, des, maxDays):
+
+    url = 'http://terminal2.expedia.com:80/x/flights/overview/get'
     data = {
     "MessageHeader" : {
     "ClientInfo" : {
@@ -43,22 +52,37 @@ def getFlights(depCode, all_destinations, maxDays):
     "AirportCode" : [ depCode ]
     },
     "DestinationAirportCodeList" : {
-    "AirportCode" : [ "SFO" ]
+    "AirportCode" : [ des ]
     },
     "FlightListings" : {
     "MaxCount" : 20
     },
     "FareCalendar": {
     "StartDate": "2016-02-05T19:33:39.363-08:00",
-    "dayCount": "10"
+    "dayCount": str(maxDays)
     }
     }
 
     data_json = json.dumps(data)
     headers = {'accept': 'application/json', 'Authorization': 'expedia-apikey key=BQBh6sGziLeQsNQxVjHPlaO08ATfLKn7'}
-    response = requests.post(flightOverViewUrl, data=data_json, headers=headers)
+    response = requests.post(url, data=data_json, headers=headers)
 
-    with open('results.txt','w',) as outfile:
-        json.dump(response.json(),outfile)
+    jsonReturn = response.json()
+    totalItems = len(jsonReturn["FareCalendar"]["AirOfferSummary"])
+    allFlights = []
+    allFlightsDepDates = []
+    allFlightsRetDates = []
+    for i in range(0,totalItems):
+        allFlights.append(jsonReturn["FareCalendar"]["AirOfferSummary"][i]["FlightPriceSummary"]["TotalPrice"])
+        allFlightsDepDates.append(jsonReturn["FareCalendar"]["AirOfferSummary"][i]["FlightItinerarySummary"]["OutboundDepartureTime"])
+        allFlightsRetDates.append(jsonReturn["FareCalendar"]["AirOfferSummary"][i]["FlightItinerarySummary"]["InboundDepartureTime"])
 
-    return 
+    resultMin = min(allFlights)
+    indexOfMin = allFlights.index(price)
+
+    flightsInfo = {}
+    flightsInfo["depDate"] = allFlightsDepDates[index]
+    flightsInfo["retDate"] = allFlightsRetDates[index]
+    flightsInfo["price"] = allFlights[index]
+
+    return flightsInfo 
