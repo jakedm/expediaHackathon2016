@@ -31,11 +31,11 @@ data = {
 "AirportCode" : [ "SFO" ]
 },
 "FlightListings" : {
-"MaxCount" : 20
+"MaxCount" : 1
 },
 "FareCalendar": {
 "StartDate": "2016-02-05T19:33:39.363-08:00",
-"dayCount": "10"
+"dayCount": "1"
 }
 }
 
@@ -43,5 +43,15 @@ data_json = json.dumps(data)
 headers = {'accept': 'application/json', 'Authorization': 'expedia-apikey key=BQBh6sGziLeQsNQxVjHPlaO08ATfLKn7'}
 response = requests.post(url, data=data_json, headers=headers)
 
+fakeReturn = response.json()
+totalItems = len(fakeReturn["FareCalendar"]["AirOfferSummary"])
+allFlights = []
+for i in range(0,totalItems):
+    allFlights.append(fakeReturn["FareCalendar"]["AirOfferSummary"][i]["FlightPriceSummary"]["TotalPrice"])
+
+
 with open('results.txt','w',) as outfile:
     json.dump(response.json(),outfile)
+
+resultMin = min(allFlights)
+print(resultMin)

@@ -61,3 +61,4 @@ def getFlights(depCode, all_destinations, maxDays):
     with open('results.txt','w',) as outfile:
         json.dump(response.json(),outfile)
 
+    return 
