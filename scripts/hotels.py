@@ -60,3 +60,5 @@ def getHotels(flight_dict, num_days):
         hotels_list[dest] = hotel_data
         
     print(hotels_list['SEA'].values())
+
+    return hotels_list
