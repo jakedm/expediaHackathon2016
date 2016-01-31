@@ -100,4 +100,19 @@ body {
   height: 100%;
 }
 
+#user_input{
+  border: 2px solid black;
+  height: 300px;
+  width: 200px;
+  position: relative;
+/*<i class="material-icons">flight</i>
+      <span>SEA --> SLC $300</span>
+      <hr>
+      <img src="../static/pictures/hotel.jpg" alt="hotel" height="100" width="100%">
+      <hr>
+      <i class="material-icons">home</i>
+      <span> 3 days x $66 -> $198</span>
+      <span> Total = $498</span>
+      <button>Book</button>*/
+}
 
