@@ -15,9 +15,9 @@ body {
 
 .navbar {
   border-radius: 0;
-  box-shadow: rgba(0,0,0,0.3) 0 1px 4px 0;
   margin-bottom: 0;
   z-index: 3;
+  box-shadow: rgba(0,0,0,0.3) 0 1px 4px 0;
 }
 
 .navbar-brand {
@@ -82,15 +82,42 @@ body {
 
 /*------------/ SEARCH BOX /-------------*/
 .search-container {
-  width: 300px;
-  height: 200px;
-  /*margin: 100px 100px;*/
-  border-radius: 2px;
   position: absolute;
   z-index: 3;
 }
 
+.search-box {
+  margin: 5% 15%;
+  padding: 10px;
+
+  display: block;
+  line-height: 1.42857143;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+
+  box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
+
+  -webkit-transition: border 0.2s ease-in-out;
+  -o-transition: border 0.2s ease-in-out;
+  transition: border 0.2s ease-in-out;
+}
+
 @media (max-width: 767px) {
+  .search-container {
+    position: static;
+  }
+
+  .search-box {
+    margin: 0;
+    padding: 5px 15px 10px;
+  }
+}
+
+@media (min-width: 767px) {
+  .search-box {
+    max-width: 380px;
+  }
 }
 
 
@@ -100,19 +127,20 @@ body {
   height: 100%;
 }
 
-#user_input{
-  border: 2px solid black;
+#user_input {
+  border: 2px solid #fff;
   height: 300px;
   width: 200px;
   position: relative;
-/*<i class="material-icons">flight</i>
-      <span>SEA --> SLC $300</span>
-      <hr>
-      <img src="../static/pictures/hotel.jpg" alt="hotel" height="100" width="100%">
-      <hr>
-      <i class="material-icons">home</i>
-      <span> 3 days x $66 -> $198</span>
-      <span> Total = $498</span>
-      <button>Book</button>*/
+  /*
+  <i class="material-icons">flight</i>
+  <span>SEA --> SLC $300</span>
+  <hr>
+  <img src="../static/images/hotel.jpg" alt="hotel" height="100" width="100%">
+  <hr>
+  <i class="material-icons">home</i>
+  <span> 3 days x $66 -> $198</span>
+  <span> Total = $498</span>
+  <button>Book</button>
+  */
 }
-
