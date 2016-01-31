@@ -1,8 +1,12 @@
-import json
-import requests
+Jake,
 
-url = 'http://terminal2.expedia.com:80/x/flights/overview/get'
-data = {
+our example queries::
+
+http://terminal2.expedia.com/x/mflights/search?departureDate=2016-07-15&returnDate=2016-07-25&departureAirport=SEA&arrivalAirport=LAS&apikey=BQBh6sGziLeQsNQxVjHPlaO08ATfLKn7
+
+sample query for flights overview
+
+{
 "MessageHeader" : {
 "ClientInfo" : {
 "DirectClientIP" : "1.0.0.0",
@@ -35,11 +39,22 @@ data = {
 },
 "FareCalendar": {
 "StartDate": "2015-12-01T19:33:39.363-08:00"
+"dayCount":"10"
 }
 }
 
-data_json = json.dumps(data)
-headers = {'accept': 'application/json', 'Authorization': 'expedia-apikey key=BQBh6sGziLeQsNQxVjHPlaO08ATfLKn7'}
-response = requests.post(url, data=data_json, headers=headers)
-print(response)
-print(response.json())
+
+{
+"OriginAirportCodeList" : {
+"AirportCode" : [ "SEA" ]
+},
+"DestinationAirportCodeList" : {
+"AirportCode" : [ "SFO" ]
+},
+"FlightListings" : {
+"MaxCount" : 20
+},
+"FareCalendar": {
+"StartDate": "2015-12-01T19:33:39.363-08:00"
+}
+}
