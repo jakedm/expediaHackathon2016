@@ -11,7 +11,7 @@ APP = flask.Flask(__name__)
 def index():
     """ Displays the index page accessible at '/'
     """
-    return flask.render_template('index.html')
+    return flask.render_template('static/index.html')
 
 @APP.route('/hello/<name>/')
 def hello(name):
