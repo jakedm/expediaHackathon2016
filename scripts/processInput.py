@@ -32,7 +32,7 @@ def startQuery(dep, all_destinations, num_days, month, user_price):
     
     #This is the area where I call Jason's code. Method name will change, most likely
     for i in range(0, len(day_list)):
-        flights_list[i], hotels_list[i] = getFlights(dep, all_destinations, (int)day_list[i])
+        flights_list[i], hotels_list[i] = getFlights(dep, all_destinations, int(day_list[i]))
     
     master_list = {}
     for dest in all_destinations:
@@ -40,26 +40,26 @@ def startQuery(dep, all_destinations, num_days, month, user_price):
         days_index = 0
         while not done:
             hotel = hotels_list[days_index][dest]
-            current_price = (int)flights_list[days_index]['price'] + (int)hotel['price']
+            current_price = int(flights_list[days_index]['price']) + int(hotel['price'])
             if current_price <= (int)user_price:
                 done = True                
 
-                lat = hotel['lat']
-                lng = hotel['lng']
-                address = hotel['address']
-                picture_url = hotel['url']
-                state = hotel['state']
-                city = hotel['city']
+                lat = str(hotel['lat'])
+                lng = str(hotel['lng'])
+                address = str(hotel['address'])
+                picture_url = str(hotel['url'])
+                state = str(hotel['state'])
+                city = str(hotel['city'])
                 country = "United States"
-                start = flights_list[days_index]['depDate']
-                end = flights_list[days_index]['retDate']
+                start = str(flights_list[days_index]['depDate'])
+                end = str(flights_list[days_index]['retDate'])
                 airbnb_data = getAirbnbEntries(city, state, country, start, end)
-                airbnb_cost = airbnb_data['airbnb_cost']
-                airbnb_url = airbnb_data['url']
+                airbnb_cost = str(airbnb_data['airbnb_cost'])
+                airbnb_url = str(airbnb_data['url'])
                 master_list[dest] = {
                     'departure' : dep, 
                     'destination' : dest, 
-                    'cost' = current_price, 
+                    'cost' : current_price, 
                     'lat' : lat,
                     'lng' : lng,
                     'picture' : url,

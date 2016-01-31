@@ -21,7 +21,7 @@ def getFlights(depCode, all_destinations, maxDays):
     for des in all_destinations:
         flightsDict[des] = flightsQuery(depCode, des, maxDays)
 
-    hotels_list[] = getHotels(allFlights, maxDays)
+    hotels_list = getHotels(allFlights, maxDays)
 
     return (allFlights,hotels_list)
 
