@@ -3,7 +3,19 @@ function showValue(val){
   document.getElementById("range").innerHTML=val;
 }
 
+  var map
+  function initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: 39.50, lng: -98.35},
+      zoom: 5,
+      // mapTypeControl: false
+    });
+  }
+  
 $(document).ready(function(){
+
+
+// window.onload = initMap();
   // AIRPORT LIST
   var dropdown = "<select name='airports'><br>";
   for(airport in airports){
@@ -11,7 +23,7 @@ $(document).ready(function(){
   }
   dropdown += "</select>";
   $('#dropdown').html(dropdown);
-  
+
   $('#search').click(function(){
     console.log('hi');
     // GET request to API
@@ -19,11 +31,11 @@ $(document).ready(function(){
       console.log(res);
 
       // MAP Specs
-      var mapProp = {
-        center:new google.maps.LatLng(47.609786,-122.1966154),
-        zoom:8,
-        mapTypeId:google.maps.MapTypeId.ROADMAP
-      };
+      // var mapProp = {
+      //   center:new google.maps.LatLng(47.609786,-122.1966154),
+      //   zoom:8,
+      //   mapTypeId:google.maps.MapTypeId.ROADMAP
+      // };
 
       // Instance of infowindow
       var infowindow = new google.maps.InfoWindow();
@@ -32,7 +44,7 @@ $(document).ready(function(){
 
       // Traversing through all locations that meet specifications by user (All Airports)
       for (var j =0; j < res.CarInfoList.CarInfo.length; j++) {
-        console.log(res)
+        console.log(res.CarInfoList.CarInfo[j].DropOffInfo.Location.GeoLocation.Latitude, res.CarInfoList.CarInfo[j].DropOffInfo.Location.GeoLocation.Longitude)
 
         // Creating Markers for each location (Airports)
         marker = new google.maps.Marker({
