@@ -1,45 +1,13 @@
 import requests
 import json
 from getAirports import getAirports
+from flightsQuery import getFlights
 from datetime import datetime
 
 
 # Day to begin searching at
 start_day = '15'
 year = datetime.now().year
-
-"""
-#DEPRECATED
-def parseHotels(json_response):
-    '''
-    This function will parse the json response, and get the desired fields from the json text.
-
-    This will return a dictionary of the data for the selected hotel, of form:
-      display_info = {
-        'name' : hotel_name (string)
-        'address' : hotel_address (string)
-        'lat' : latitude (string)
-        'lng' : longitude (string)
-        'cost' : total cost (float)
-      }
-
-    '''
-    response = json.loads(str(json_response))
-    
-    
-    hotel = response['HotelInfoList'][0]
-    name = hotel['Name']
-    address = hotel['Location']['StreetAddress'] + ", " hotel['Location']['City'] + ", " + hotel['Location']['Province'] + " " + hotel['Location']['Country']
-    lat_lng = [hotel['Location']['GeoLocation']['Latitude'], hotel['Location']['GeoLocation']['Longitude']]
-    price_per_night = (double)hotel['Promotion']['Amount']['Value']
-    days = (int)hotel['LengthOfStay']
-    
-    total_cost = price_per_night * days
-
-    display_info = {'name' : name, 'address' : address, 'lat' : lat_lng[0], 'lng' : lat_lng[1], 'cost' : total_cost}
-
-    return display_info
-"""    
 
 def startQuery(dep, all_destinations, num_days, month, user_price):
     '''
@@ -64,7 +32,7 @@ def startQuery(dep, all_destinations, num_days, month, user_price):
     
     #This is the area where I call Jason's code. Method name will change, most likely
     for i in range(0, len(day_list)):
-        flights_list[i], hotels_list[i] = flightsQuery(dep,all_destinations,(int)day_list[i],start_date,(int)user_price)
+        flights_list[i], hotels_list[i] = getFlights(dep,all_destinations,(int)day_list[i],start_date,(int)user_price)
         
     
     master_list = {}
@@ -76,7 +44,7 @@ def startQuery(dep, all_destinations, num_days, month, user_price):
             current_price = (int)flights_list[days_index]['price'] + (int)hotel['price']
             if current_price <= (int)user_price:
                 done = True                
-                # I NEED JASON TO RETURN THE CITY, STATE, AND COUNTRY VALUES FROM THE HOTEL API
+
                 lat = hotel['lat']
                 lng = hotel['lng']
                 address = hotel['address']
@@ -88,7 +56,7 @@ def startQuery(dep, all_destinations, num_days, month, user_price):
                 end = flights_list[days_index]['retDate']
                 airbnb_data = getAirbnbEntries(city, state, country, start, end)
                 airbnb_cost = airbnb_data['airbnb_cost']
-                airbnb_url = airbnb_data['url]
+                airbnb_url = airbnb_data['url']
                 master_list[dest] = {
                     'departure' : dep, 
                     'destination' : dest, 
