@@ -1,25 +1,26 @@
 #!/usr/bin/env python
-
-import flask
+from flask import Flask, render_template, request, redirect, jsonify
+import requests
 
 
 # Create the application.
-APP = flask.Flask(__name__)
+app = Flask(__name__)
 
 
-@APP.route('/')
+@app.route('/')
 def index():
-    """ Displays the index page accessible at '/'
-    """
-    return flask.render_template('index.html')
+    return render_template('index.html')
 
-@APP.route('/hello/<name>/')
-def hello(name):
-    """ Displays the page greats who ever comes to visit it.
-    """
-    return flask.render_template('test.html', name=name)
+@app.route('/user_input', methods=['POST'])
+def user_input():
+	print request.form
+	return redirect('/')
 
+@app.route('/search', methods=['GET'])
+def search():
+	#Airport API goes here
+    s = requests.get("http://terminal2.expedia.com/x/cars/search?pickupdate=2016-03-21T10:00&dropoffdate=2016-03-28T16:30&pickuplocation=SEA&dropofflocation=SEA&sort=price&limit=10&apikey=BQBh6sGziLeQsNQxVjHPlaO08ATfLKn7")
+    #Coverts API into JSON and sends it back to the client-side
+    return jsonify(s.json())
 
-if __name__ == '__main__':
-    APP.debug=True
-    APP.run()
+app.run(debug=True) 
