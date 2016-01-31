@@ -1,7 +1,7 @@
 import sys
 import requests
 import json
-import hotels
+from hotels import getHotels
 
 '''
     This function will return the cheapest flight for a given location that leaves, returns on
@@ -21,9 +21,18 @@ def getFlights(depCode, all_destinations, maxDays):
     for des in all_destinations:
         flightsDict[des] = flightsQuery(depCode, des, maxDays)
 
-    hotels_list = getHotels(allFlights, maxDays)
-
-    return (allFlights,hotels_list)
+    #hotels_list = getHotels(flightsDict, maxDays)
+    
+    hotels_list = {
+        "lat" : "10",
+        "lng" : "20",
+        "address" : "gdsag",
+        "url" : "www.google.com",
+        "state" : "WA",
+        "city" : "SEA"
+        }
+        
+    return (flightsDict,hotels_list)
 
 def flightsQuery(depCode, des, maxDays):
 
@@ -68,8 +77,8 @@ def flightsQuery(depCode, des, maxDays):
     data_json = json.dumps(data)
     headers = {'accept': 'application/json', 'Authorization': 'expedia-apikey key=BQBh6sGziLeQsNQxVjHPlaO08ATfLKn7'}
     response = requests.post(url, data=data_json, headers=headers)
-
     jsonReturn = response.json()
+    print(des)
     totalItems = len(jsonReturn["FareCalendar"]["AirOfferSummary"])
     allFlights = []
     allFlightsDepDates = []
