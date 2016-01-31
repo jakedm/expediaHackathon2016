@@ -32,8 +32,7 @@ def startQuery(dep, all_destinations, num_days, month, user_price):
     
     #This is the area where I call Jason's code. Method name will change, most likely
     for i in range(0, len(day_list)):
-        flights_list[i], hotels_list[i] = getFlights(dep,all_destinations,(int)day_list[i],start_date,(int)user_price)
-        
+        flights_list[i], hotels_list[i] = getFlights(dep, all_destinations, (int)day_list[i])
     
     master_list = {}
     for dest in all_destinations:
