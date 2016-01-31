@@ -1,6 +1,16 @@
 import requests
-import beautifulsoup4
+import json
 from getAirports import getAirports
+from datetime import datetime
+
+def getNumDays(d1, d2):
+    d1 = datetime.strptime(d1, "%Y-%m-%d")
+    d2 = datetime.strptime(d2, "%Y-%m-%d")
+    return int(abs((d2 - d1).days))
+
+"""
+DEPRECATED
+JASON PUTTING THIS LOGIC IN SEPERATE FILE
 
 def getHotels(dep, all_destinations, daterange):
     '''
@@ -24,21 +34,61 @@ def getFlights(dep, all_destinations, daterange):
       round trip price for the flights selected.
     '''
 
+"""
+
+def parseFlights(json_response):
+    '''
+    This function will parse the json response, and get the desired fields from the json text.
+    '''
+    response = json.loads(str(json_response))
+
+
+
+def parseHotels(json_response):
+    '''
+    This function will parse the json response, and get the desired fields from the json text.
+
+    This will return a dictionary of the data for the selected hotel, of form:
+      display_info = {
+        'name' : hotel_name (string)
+        'address' : hotel_address (string)
+        'lat' : latitude (string)
+        'lng' : longitude (string)
+        'cost' : total cost (float)
+      }
+
+    '''
+    response = json.loads(str(json_response))
+    
+    
+    hotel = response['HotelInfoList'][0]
+    name = hotel['Name']
+    address = hotel['Location']['StreetAddress'] + ", " hotel['Location']['City'] + ", " + hotel['Location']['Province'] + " " + hotel['Location']['Country']
+    lat_lng = [hotel['Location']['GeoLocation']['Latitude'], hotel['Location']['GeoLocation']['Longitude']]
+    price_per_night = (double)hotel['Promotion']['Amount']['Value']
+    days = (int)hotel['LengthOfStay']
+    
+    total_cost = price_per_night * days
+
+    display_info = {'name' : name, 'address' : address, 'lat' : lat_lng[0], 'lng' : lat_lng[1], 'cost' : total_cost}
+
+    return display_info
 
 def findVacations(dep, all_destinations, daterange, user_price):
     '''
     Returns all vacations possible (hotel + round trip flight) under a given input price, for a given departure location.
     
     '''
+    #Final dictionary(?) of possible vacations; will contain one entry for every given location.
+    acceptable_vacations = {}
 
-def getFlightOverview(dep, all_destinations, daterange, user_price):
+    #Length of stay variable needs to be set to number of days between the start/end 
+    length_of_stay = getNumDays(daterange[1], daterange[0])
+
+
+#def getFlightOverview(dep, all_destinations, daterange, user_price):
     
 
-
-def findDate():
-    '''
-    Narrow down search space for vacation dates
-    '''
 
 def findAllDest(dep, daterange, user_price):
     '''
@@ -62,7 +112,7 @@ def findAllDest(dep, daterange, user_price):
         
     return destinations
 
-def computeCosts(user_price):
+#def computeCosts(user_price):
 
 
 def processInput(daterange, price, dep):
