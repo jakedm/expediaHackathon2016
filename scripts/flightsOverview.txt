@@ -1,8 +1,4 @@
-import json
-import requests
-
-url = 'http://terminal2.expedia.com:80/x/flights/overview/get'
-data = {
+{
 "MessageHeader" : {
 "ClientInfo" : {
 "DirectClientIP" : "1.0.0.0",
@@ -34,14 +30,6 @@ data = {
 "MaxCount" : 20
 },
 "FareCalendar": {
-"StartDate": "2016-02-05T19:33:39.363-08:00",
-"dayCount": "10"
+"StartDate": "2016-02-05"
 }
 }
-
-data_json = json.dumps(data)
-headers = {'accept': 'application/json', 'Authorization': 'expedia-apikey key=BQBh6sGziLeQsNQxVjHPlaO08ATfLKn7'}
-response = requests.post(url, data=data_json, headers=headers)
-
-with open('results.txt','w',) as outfile:
-    json.dump(response.json(),outfile)
