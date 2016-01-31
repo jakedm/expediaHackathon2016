@@ -116,7 +116,7 @@ body {
 
 @media (min-width: 767px) {
   .search-box {
-    max-width: 350px;
+    max-width: 380px;
   }
 }
 
@@ -136,7 +136,7 @@ body {
   <i class="material-icons">flight</i>
   <span>SEA --> SLC $300</span>
   <hr>
-  <img src="../static/pictures/hotel.jpg" alt="hotel" height="100" width="100%">
+  <img src="../static/images/hotel.jpg" alt="hotel" height="100" width="100%">
   <hr>
   <i class="material-icons">home</i>
   <span> 3 days x $66 -> $198</span>
