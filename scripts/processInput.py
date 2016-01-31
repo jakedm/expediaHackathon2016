@@ -20,8 +20,8 @@ def getHotels(dep, all_destinations, daterange):
     '''
     result = Requests.get("http://terminal2.expedia.com:80/x/mflights/search", params=payload)
 
-
-def getFlights(dep, all_destinations, daterange):
+"""
+def getFlights(dep, all_destinations, daterange;):
     '''
     This function will return the cheapest flight for a given location that leaves, returns on
     the given daterange.
@@ -34,13 +34,14 @@ def getFlights(dep, all_destinations, daterange):
       round trip price for the flights selected.
     '''
 
-"""
+    
 
-def parseFlights(json_response):
+
+def parseFlights(all_destinations, flight_dict):
     '''
     This function will parse the json response, and get the desired fields from the json text.
     '''
-    response = json.loads(str(json_response))
+    
 
 
 
