@@ -13,18 +13,12 @@ def index():
 
 @app.route('/user_input', methods=['POST'])
 def user_input():
-    print request.form
-    print request.form['airport']
-    print request.form['price']
-    print request.form['month']
-    print request.form['option']
-    print request.form['num_days']
-    return redirect('/')
+	print request.form
+	return redirect('/')
 
 @app.route('/search', methods=['GET'])
 def search():
-    #Airport API goes here
-    print 'hi'
+	#Airport API goes here
     s = requests.get("http://terminal2.expedia.com/x/cars/search?pickupdate=2016-03-21T10:00&dropoffdate=2016-03-28T16:30&pickuplocation=SEA&dropofflocation=SEA&sort=price&limit=10&apikey=BQBh6sGziLeQsNQxVjHPlaO08ATfLKn7")
     #Coverts API into JSON and sends it back to the client-side
     return jsonify(s.json())
