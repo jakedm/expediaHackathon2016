@@ -15,22 +15,49 @@ flightOverViewUrl = 'http://terminal2.expedia.com:80/x/flights/overview/get'
       round trip price for the flights selected.
 '''
 
-def hello(v):
-    print('hello ' +v)
-
 def getFlights(depCode, all_destinations, maxDays):
-    ''' 
-    String depCode
 
+    data = {
+    "MessageHeader" : {
+    "ClientInfo" : {
+    "DirectClientIP" : "1.0.0.0",
+    "DirectClientHostname" : "TestDirectClientHostname",
+    "DirectClientName" : "TestDirectClientName",
+    "OriginalClientIP" : "10.0.0.5",
+    "OriginalClientHostname" : "TestOriginalClientHostname",
+    "OriginalClientName" : "TestOriginalClientName"
+    },
+    "MessageVersion" : "V1.1",
+    "CreateDateTime" : 1439251723896,
+    "MessageGUID" : "1234a34a-3567-89c4-19cd-12345678abcd",
+    "TransactionGUID" : "airoverviewhappypath"
+    },
+    "tpid" : 1,
+    "eapid" : 0,
+    "PointOfSaleKey" : {
+    "JurisdictionCountryCode" : "USA",
+    "CompanyCode" : "10111",
+    "ManagementUnitCode" : "1010"
+    },
+    "OriginAirportCodeList" : {
+    "AirportCode" : [ depCode ]
+    },
+    "DestinationAirportCodeList" : {
+    "AirportCode" : [ "SFO" ]
+    },
+    "FlightListings" : {
+    "MaxCount" : 20
+    },
+    "FareCalendar": {
+    "StartDate": "2016-02-05T19:33:39.363-08:00",
+    "dayCount": "10"
+    }
+    }
 
-    '''
-    retDate = 2016-02-22
-    origin = 
+    data_json = json.dumps(data)
+    headers = {'accept': 'application/json', 'Authorization': 'expedia-apikey key=BQBh6sGziLeQsNQxVjHPlaO08ATfLKn7'}
+    response = requests.post(flightOverViewUrl, data=data_json, headers=headers)
 
-    queryString = "http://terminal2.expedia.com/x/mflights/search?departureDate=" + depDate + "&returnDate=" + retDate +"&departureAirport="+ origin +"&arrivalAirport="+ retAirport +"&apikey=BQBh6sGziLeQsNQxVjHPlaO08ATfLKn7"
-    
-def main(args):
-    hello(args[1])
+    with open('results.txt','w',) as outfile:
+        json.dump(response.json(),outfile)
 
-if __name__ == '__main__':
-    main(sys.argv)

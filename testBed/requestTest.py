@@ -34,12 +34,14 @@ data = {
 "MaxCount" : 20
 },
 "FareCalendar": {
-"StartDate": "2015-12-01T19:33:39.363-08:00"
+"StartDate": "2016-02-05T19:33:39.363-08:00",
+"dayCount": "10"
 }
 }
 
 data_json = json.dumps(data)
 headers = {'accept': 'application/json', 'Authorization': 'expedia-apikey key=BQBh6sGziLeQsNQxVjHPlaO08ATfLKn7'}
 response = requests.post(url, data=data_json, headers=headers)
-print(response)
-print(response.json())
+
+with open('results.txt','w',) as outfile:
+    json.dump(response.json(),outfile)
