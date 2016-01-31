@@ -54,13 +54,15 @@ def startQuery(dep, all_destinations, num_days, month, user_price):
     if (max_days > 2):
         day_list.append(num_days - 1)
         day_list.append(num_days - 2)
-    else:
+    elif (max_days == 2):
         day_list.append(num_days - 1)
 
     start_date = year + '-' + month + '-' + start_day
 
     hotels_list = []
     flights_list = []
+    
+    #This is the area where I call Jason's code. Method name will change, most likely
     for i in range(0, len(day_list)):
         flights_list[i], hotels_list[i] = flightsQuery(dep,all_destinations,(int)day_list[i],start_date,(int)user_price)
         
@@ -73,10 +75,8 @@ def startQuery(dep, all_destinations, num_days, month, user_price):
             hotel = hotels_list[days_index][dest]
             current_price = (int)flights_list[days_index]['price'] + (int)hotel['price']
             if current_price <= (int)user_price:
-                done = True
-                
+                done = True                
                 # I NEED JASON TO RETURN THE CITY, STATE, AND COUNTRY VALUES FROM THE HOTEL API
-                #MAKE MASTER DICTIONARY
                 lat = hotel['lat']
                 lng = hotel['lng']
                 address = hotel['address']
@@ -86,7 +86,9 @@ def startQuery(dep, all_destinations, num_days, month, user_price):
                 country = "United States"
                 start = flights_list[days_index]['depDate']
                 end = flights_list[days_index]['retDate']
-                #airbnb_price = getAirbnbEntries(city, state, country, start, end)
+                airbnb_data = getAirbnbEntries(city, state, country, start, end)
+                airbnb_cost = airbnb_data['airbnb_cost']
+                airbnb_url = airbnb_data['url]
                 master_list[dest] = {
                     'departure' : dep, 
                     'destination' : dest, 
@@ -96,8 +98,8 @@ def startQuery(dep, all_destinations, num_days, month, user_price):
                     'picture' : url,
                     'startDate' : start,
                     'endDate' : end,
-                    'airbnb_cost' : airbnb_price}
-                    
+                    'airbnb_cost' : airbnb_cost,
+                    'airbnb_url' : airbnb_url}
             else:
                 days_index += 1
             
