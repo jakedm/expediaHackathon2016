@@ -10,8 +10,6 @@
 <body>
   <!-- CONTENTS BEGIN-->
 
-
-
     <!-- MODAL -->
     <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
       <div class="modal-dialog modal-sm">
@@ -19,18 +17,24 @@
           <div class="panel panel-warning detail-box">
             <div class="panel-heading">
               <h3 class="panel-title">
-                <span><i class="fa fa-plane"></i></span>
-                <span id="origin">SEA</span>
-                <span><i class="fa fa-long-arrow-right"></i></span>
-                <span id="destination">SLC</span>
-                <span class="pull-right">
-                  <span><i class="fa fa-usd"></i> </span>
-                  <span id="fare">327</span>
-                </span>
+                <span><i class="fa fa-map-marker"></i></span> <span id="city">Salt Lake City, Utah</span>
               </h3>
             </div>
             <div class="panel-body">
               <img src="../static/images/hotel.jpg" class="img-responsive" alt="Hotel Image">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  <span><i class="fa fa-plane"></i></span>
+                  <span id="origin">SEA</span>
+                  <span><i class="fa fa-long-arrow-right"></i></span>
+                  <span id="destination">SLC</span>
+                  <span class="pull-right">
+                    <span><i class="fa fa-usd"></i> </span>
+                    <span id="fare">327</span>
+                  </span>
+                </h3>
+              </div>
+              <hr style="margin-top: 2px; margin-bottom: 2px;">
               <div class="panel-heading">
                 <h3 class="panel-title">
                   <span><i class="fa fa-bed"></i></span>
@@ -114,7 +118,7 @@
                 <span class="input-group-addon">
                   <i class="fa fa-map-marker fa-fw"></i>
                 </span>
-                <select class="form-control" id="dropdown"></select>
+                <select class="form-control" id="dropdown" name="airport"></select>
               </div>
             </div>
 
@@ -123,7 +127,20 @@
                 <span class="input-group-addon">
                   <i class="fa fa-male fa-fw"></i><i class="fa fa-angle-double-right fa-fw"></i><i class="fa fa-plane fa-fw"></i>
                 </span>
-                <select class="form-control" id="dropdown"></select>
+                <select class="form-control" id="month" name="month">
+                  <option value="1">January</option>
+                  <option value="2">Febuary</option>
+                  <option value="3">March</option>
+                  <option value="4">April</option>
+                  <option value="5">May</option>
+                  <option value="6">June</option>
+                  <option value="7">July</option>
+                  <option value="8">August</option>
+                  <option value="9">September</option>
+                  <option value="10">October</option>
+                  <option value="11">November</option>
+                  <option value="12">December</option>
+                </select>
               </div>
             </div>
 
@@ -132,7 +149,7 @@
                 <span class="input-group-addon">
                   <i class="fa fa-calendar-check-o fa-fw"></i><i class="fa fa-angle-double-right fa-fw"></i><i class="fa fa-plane fa-fw"></i>
                 </span>
-                <select class="form-control" id="dropdown"></select>
+                <input type="num" class="form-control" id="num_days" placeholder="ex. 3" name="num_days">
               </div>
             </div>
 
@@ -167,9 +184,8 @@
                 I'd rather go with Nonstop <i class="fa fa-paper-plane-o"></i>
               </label>
             </div>
-
-            <input type="submit" value="Search &raquo;" class="btn btn-warning btn-block" type="submit" id="search">
           </form>
+          <input type="submit" id="search" value="Search &raquo;" class="btn btn-default btn-block">
         </div>
 
         <div class="thumbnail search-box">
@@ -179,25 +195,28 @@
       </div>
     </div>
 
-
     <div id="map"><div id="user_input"></div></div>
 
   <!-- CONTENTS END /-->
 
 
 
-  <!-- JQUERY -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <!-- JS -->
-  <script type="text/javascript" src="../static/js/bootstrap.js"></script>
-  <script type="text/javascript" src="../static/js/airports.js"></script>
-  <script type="text/javascript" src="../static/js/index.js"></script>
-  <script type="text/javascript" src="../static/js/map.js"></script>
-  <!-- ICONS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- GOOGLE MAPS API -->
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCausKJ7flSP5a28LEc1Jmk8v2z5zkUyyg&callback=initMap">
   </script>
+  <!-- GOOGLE ICON -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+  <!-- JQUERY -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <!-- JS -->
+  <script type="text/javascript" src="../static/js/bootstrap.js"></script>
+  <script type="text/javascript" src="../static/js/map.js"></script>
+  <script type="text/javascript" src="../static/js/airports.js"></script>
+  <script type="text/javascript" src="../static/js/index.js"></script>
+  <!-- ICONS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
 </body>
 </html>
