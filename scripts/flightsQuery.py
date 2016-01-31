@@ -1,7 +1,7 @@
 import sys
 import requests
 import json
-#import hotels
+import hotels
 
 '''
     This function will return the cheapest flight for a given location that leaves, returns on
@@ -21,7 +21,9 @@ def getFlights(depCode, all_destinations, maxDays):
     for des in all_destinations:
         flightsDict[des] = flightsQuery(depCode, des, maxDays)
 
-    #hotelsQuery(allFlights)
+    hotels_list[] = getHotels(allFlights, maxDays)
+
+    return (allFlights,hotels_list)
 
 def flightsQuery(depCode, des, maxDays):
 
