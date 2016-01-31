@@ -15,9 +15,9 @@ body {
 
 .navbar {
   border-radius: 0;
-  box-shadow: rgba(0,0,0,0.3) 0 1px 4px 0;
   margin-bottom: 0;
   z-index: 3;
+  box-shadow: rgba(0,0,0,0.3) 0 1px 4px 0;
 }
 
 .navbar-brand {
@@ -96,6 +96,8 @@ body {
   border: 1px solid #ddd;
   border-radius: 2px;
 
+  box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
+
   -webkit-transition: border 0.2s ease-in-out;
   -o-transition: border 0.2s ease-in-out;
   transition: border 0.2s ease-in-out;
@@ -108,7 +110,13 @@ body {
 
   .search-box {
     margin: 0;
-    padding: 5px 15px;
+    padding: 5px 15px 10px;
+  }
+}
+
+@media (min-width: 767px) {
+  .search-box {
+    max-width: 350px;
   }
 }
 
