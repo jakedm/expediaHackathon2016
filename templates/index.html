@@ -207,7 +207,7 @@
               google.maps.event.addListener(marker, 'click', (function(marker, j) {
                 return function() {
                   // infowindow.setContent("<p>"+locations[j]['firstName']+"\'s Location</p>"+"<a href='/student/request/"+locations[j]['user_id']+"'>Request Tutor</a>");
-                  infowindow.setContent("<i class='material-icons'>flight</i><span>SEA --> SLC $300</span>"+"<p>$"+res.CarInfoList.CarInfo[j].Price.BaseRate.Value+"</p>");
+                  infowindow.setContent("<i class='material-icons'>flight</i><span>SEA --> SLC $300</span><hr><img src="+res.CarInfoList.CarInfo[j].ThumbnailUrl+"alt='hotel' height='100' width='100%'+"<p>$"+res.CarInfoList.CarInfo[j].Price.BaseRate.Value+"</p>");
                   infowindow.open(map, marker);
                 }
               })(marker, j));
