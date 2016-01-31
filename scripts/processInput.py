@@ -3,48 +3,13 @@ import json
 from getAirports import getAirports
 from datetime import datetime
 
-def getNumDays(d1, d2):
-    d1 = datetime.strptime(d1, "%Y-%m-%d")
-    d2 = datetime.strptime(d2, "%Y-%m-%d")
-    return int(abs((d2 - d1).days))
+
+# Day to begin searching at
+start_day = '15'
+year = datetime.now().year
 
 """
-DEPRECATED
-JASON PUTTING THIS LOGIC IN SEPERATE FILE
-
-def getHotels(dep, all_destinations, daterange):
-    '''
-    This function will return the cheapest flight for a given location that leaves, returns on
-    the given daterange.
-    
-    '''
-    result = Requests.get("http://terminal2.expedia.com:80/x/mflights/search", params=payload)
-
-"""
-def getFlights(dep, all_destinations, daterange;):
-    '''
-    This function will return the cheapest flight for a given location that leaves, returns on
-    the given daterange.
-
-    :param dep: String denoting departure airport
-    :param all_destinations: List of all possible destinations (Strings)
-    :param daterange: List of date range (two strings)
-
-    returns (in some data structure) the name of the flight to the destination, the name of the flight home, and the
-      round trip price for the flights selected.
-    '''
-
-    
-
-
-def parseFlights(all_destinations, flight_dict):
-    '''
-    This function will parse the json response, and get the desired fields from the json text.
-    '''
-    
-
-
-
+#DEPRECATED
 def parseHotels(json_response):
     '''
     This function will parse the json response, and get the desired fields from the json text.
@@ -74,34 +39,73 @@ def parseHotels(json_response):
     display_info = {'name' : name, 'address' : address, 'lat' : lat_lng[0], 'lng' : lat_lng[1], 'cost' : total_cost}
 
     return display_info
+"""    
 
-def findVacations(dep, all_destinations, daterange, user_price):
+def startQuery(dep, all_destinations, num_days, month, user_price):
     '''
-    Returns all vacations possible (hotel + round trip flight) under a given input price, for a given departure location.
+    This function gets all required arguments and sends the necessary data to the query scripts.
     
+    ASSUMPTION 1: Month is already a numeric type.
     '''
-    #Final dictionary(?) of possible vacations; will contain one entry for every given location.
-    acceptable_vacations = {}
 
-    #Length of stay variable needs to be set to number of days between the start/end 
-    length_of_stay = getNumDays(daterange[1], daterange[0])
+    max_days = num_days
+    day_list = []
+    day_list.append(max_days)
+    if (max_days > 2):
+        day_list.append(num_days - 1)
+        day_list.append(num_days - 2)
+    else:
+        day_list.append(num_days - 1)
 
+    start_date = year + '-' + month + '-' + start_day
 
-#def getFlightOverview(dep, all_destinations, daterange, user_price):
+    hotels_list = []
+    flights_list = []
+    for i in range(0, len(day_list)):
+        flights_list[i], hotels_list[i] = flightsQuery(dep,all_destinations,(int)day_list[i],start_date,(int)user_price)
+        
     
+    master_list = {}
+    for dest in all_destinations:
+        done = False
+        days_index = 0
+        while not done:
+            hotel = hotels_list[days_index][dest]
+            current_price = (int)flights_list[days_index]['price'] + (int)hotel['price']
+            if current_price <= (int)user_price:
+                done = True
+                
+                # I NEED JASON TO RETURN THE CITY, STATE, AND COUNTRY VALUES FROM THE HOTEL API
+                #MAKE MASTER DICTIONARY
+                lat = hotel['lat']
+                lng = hotel['lng']
+                address = hotel['address']
+                picture_url = hotel['url']
+                state = hotel['state']
+                city = hotel['city']
+                country = "United States"
+                start = flights_list[days_index]['depDate']
+                end = flights_list[days_index]['retDate']
+                #airbnb_price = getAirbnbEntries(city, state, country, start, end)
+                master_list[dest] = {
+                    'departure' : dep, 
+                    'destination' : dest, 
+                    'cost' = current_price, 
+                    'lat' : lat,
+                    'lng' : lng,
+                    'picture' : url,
+                    'startDate' : start,
+                    'endDate' : end,
+                    'airbnb_cost' : airbnb_price}
+                    
+            else:
+                days_index += 1
+            
+    return master_list
 
-
-def findAllDest(dep, daterange, user_price):
+def findAllDest(dep):
     '''
     This function will get all available destinations from a given departure location.
-
-    OPTION 1: Assume all locations are reachable from all other locations, use the getFlights()
-      function (which depends on the Flight Search API) to repeatedly query the website; getFlights() will then make len(locations) - 1
-      different queries, and select the cheapest flight from that.
-
-    OPTION 2: Use the Flights Overview API to do 1 query, return all destinations from a given departure location on a given date, possibly
-      get return flight information from same query.
-        -- FLIGHTS OVERVIEW API IS BROKEN AS OF 10:39 AM
 
     '''
     locations = getAirports()
@@ -113,10 +117,8 @@ def findAllDest(dep, daterange, user_price):
         
     return destinations
 
-#def computeCosts(user_price):
 
-
-def processInput(daterange, price, dep):
+def processInput(month, num_days, price, dep):
     '''
     This is the function that the first page will send user input to.
 
@@ -124,18 +126,13 @@ def processInput(daterange, price, dep):
     
     Once the helper functions are done, then this function will call the function which will compute the average.
 
-    :param daterange: list of form (startdate, enddate); both elements are strings, in some form.
+    :param num_days: Number of days to plan vacation for
     :param price: String representing max price.
     :param dep: 3 letter airport code, recieved from dropdown list.
     '''
     
     
-    # findAllDest() will return all destination options available for the given input date
-    possible_dest = findAllDest(dep, daterange, price)
+    # findAllDest() will return all destination options available for the given input 
+    destinations= findAllDest(dep)
 
-    # findVacations will return a dictionary(?) of structure:
-    #   vacations['destination airport'] = {'price of cheapest destination flight' : 'price', 'flight name' : 'name', 'price of cheapest return flight' : 'price', 'flight name' : 'name', 'price of cheapest hotel for entirety of stay' : 'price', 'name of hotel' : 'name']
-    #   
-    #   In other words, the dictionary will contain:
-    #   Price of cheapest flight to destination, name of flight, price of cheapest flight home, name of flight,
-    vacations = findVacations()
+    data = startQuery(dep, destinations, num_days, month, price)
