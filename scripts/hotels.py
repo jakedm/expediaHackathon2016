@@ -56,7 +56,7 @@ def getHotels(flight_dict, num_days):
     for dest in flight_dict.keys():
         start = flight_dict[dest]['depDate']
         end = flight_dict[dest]['retDate']
-        hotel_data = hotelsQuery(dest, start, end, num_days, lat_lng[dest])
+        hotel_data = hotelsQuery(dest, start, end, num_days, lat_long[dest])
         hotels_list[dest] = hotel_data
         
     print(hotels_list['SEA'].values())
