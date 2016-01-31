@@ -105,7 +105,7 @@ body {
   height: 300px;
   width: 200px;
   position: relative;
-<i class="material-icons">flight</i>
+/*<i class="material-icons">flight</i>
       <span>SEA --> SLC $300</span>
       <hr>
       <img src="../static/pictures/hotel.jpg" alt="hotel" height="100" width="100%">
@@ -113,6 +113,6 @@ body {
       <i class="material-icons">home</i>
       <span> 3 days x $66 -> $198</span>
       <span> Total = $498</span>
-      <button>Book</button>
+      <button>Book</button>*/
 }
 
