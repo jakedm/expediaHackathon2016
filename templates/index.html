@@ -110,16 +110,27 @@
         <input type="submit" value="Search">
       </form> 
     </div>
+    <div id="user_input">
+      <i class="material-icons">flight</i>
+      <span>SEA --> SLC $300</span>
+      <hr>
+      <img src="../static/pictures/hotel.jpg" alt="hotel" height="100" width="100%">
+      <hr>
+      <i class="material-icons">home</i>
+      <span> 3 days x $66 -> $198</span>
+      <span> Total = $498</span>
+      <button>Book</button>
+    </div>
     <div id="map">
-      <div id="user_input">
-
-      </div>
+      
     </div>
     <!-- </div> -->
   <!-- CONTENTS END /-->
 
 
   <!-- GOOGLE MAPS API -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCausKJ7flSP5a28LEc1Jmk8v2z5zkUyyg&callback=initMap">
   </script>
@@ -179,6 +190,7 @@
 
             // Instance of infowindow
             var infowindow = new google.maps.InfoWindow();
+            var infowindow1 = new google.maps.InfoWindow();
             var marker, j;
 
             // Traversing through all locations that meet specifications by user (All Airports)
@@ -195,10 +207,12 @@
               google.maps.event.addListener(marker, 'click', (function(marker, j) {
                 return function() {
                   // infowindow.setContent("<p>"+locations[j]['firstName']+"\'s Location</p>"+"<a href='/student/request/"+locations[j]['user_id']+"'>Request Tutor</a>");
-                  infowindow.setContent("<p>$"+res.CarInfoList.CarInfo[j].Price.BaseRate.Value+"</p>");
+                  infowindow.setContent("<i class='material-icons'>flight</i><span>SEA --> SLC $300</span>"+"<p>$"+res.CarInfoList.CarInfo[j].Price.BaseRate.Value+"</p>");
                   infowindow.open(map, marker);
                 }
               })(marker, j));
+              infowindow1.setContent("<p>$"+res.CarInfoList.CarInfo[j].Price.BaseRate.Value+"</p>");
+              infowindow1.open(map, marker);
             }
           })
         })

@@ -100,4 +100,11 @@ body {
   height: 100%;
 }
 
+#user_input{
+  border: 2px solid black;
+  height: 300px;
+  width: 200px;
+  position: relative;
+
+}
 
